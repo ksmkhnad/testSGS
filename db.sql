@@ -35,8 +35,6 @@ VALUES (Newid(), @containerid, getdate(), getdate(), 'тип1', 'имя1','ме�
        (Newid(), @containerid, getdate(), getdate(), 'тип3', 'имя2','место');
 end
 
-declare @containesrs uniqueidentifier = NULL
-select @containesrs = containerId from containers where Type = 'тип1'
 SELECT 
     '{"id":' + CAST(containerId as nvarchar(50)) + 
     ',"Number":' + CAST(Number as nvarchar(50)) + 
