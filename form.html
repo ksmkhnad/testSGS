@@ -1,0 +1,135 @@
+<html>
+  <head>
+    <style>
+      h1 {
+        text-align: center;
+        font-family: "Times New Roman", Times, serif;
+        font-style: normal;
+      }
+      select {
+        width: 100%;
+        padding: 12px 20px;
+        margin: 8px 0;
+        display: inline-block;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        box-sizing: border-box;
+      }
+      div {
+        border-radius: 5px;
+        background-color: #f2f2f2;
+        padding: 20px;
+      }
+      input[type="submit"] {
+        width: 100%;
+        background-color: #4caf50;
+        color: white;
+        padding: 14px 20px;
+        margin: 8px 0;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+      }
+    </style>
+    <script>
+      function updateDepartmentList() {
+        var city = document.getElementById("city").value;
+        var departments = [];
+        if (city === "city1") {
+          departments = ["цех1", "цех2", "цех3"];
+        } else if (city === "city2") {
+          departments = ["цех4", "цех5", "цех6"];
+        } else {
+          departments = [];
+        }
+
+        var departmentSelect = document.getElementById("department");
+        departmentSelect.options.length = 0;
+        for (var i = 0; i < departments.length; i++) {
+          var option = document.createElement("option");
+          option.value = departments[i];
+          option.text = departments[i];
+          departmentSelect.add(option);
+        }
+
+        updateEmployeeList();
+      }
+
+      function updateEmployeeList() {
+        var city = document.getElementById("city").value;
+        var department = document.getElementById("department").value;
+        var employees = [];
+        if (city === "city1" && department === "цех1") {
+          employees = ["сотрудник1", "сотрудник2", "сотрудник3"];
+        } else if (city === "city1" && department === "цех2") {
+          employees = ["сотрудник4", "сотрудник5", "сотрудник6"];
+        } else {
+          employees = [];
+        }
+
+        var employeeSelect = document.getElementById("employee");
+        employeeSelect.options.length = 0;
+        for (var i = 0; i < employees.length; i++) {
+          var option = document.createElement("option");
+          option.value = employees[i];
+          option.text = employees[i];
+          employeeSelect.add(option);
+        }
+      }
+      function storeValues() {
+        const city = document.getElementById("city").value;
+        const department = document.getElementById("department").value;
+        const employee = document.getElementById("employee").value;
+        const team = document.getElementById("team").value;
+        const shift = document.getElementById("shift").value;
+
+        const formValues = { city, department, employee, team, shift };
+        const formValuesJson = JSON.stringify(formValues);
+
+        document.cookie =
+          "formValues=" +
+          formValuesJson +
+          "; expires=Thu, 18 Dec 2023 12:00:00 UTC; path=/";
+        console.log(document.cookie);
+        alert("Форма сохарнена в Cookie.");
+      }
+    </script>
+  </head>
+  <body>
+    <form onsubmit="storeValues(); return false;">
+      <label for="city">Город:</label>
+      <select id="city" onchange="updateDepartmentList()">
+        <option value="">Выберите город:</option>
+        <option value="city1">Алматы</option>
+        <option value="city2">Астана</option>
+      </select>
+      <br />
+      <br />
+      <label for="department">Цех:</label>
+      <select id="department" onchange="updateEmployeeList()">
+        <option value="">Выберите цех</option>
+      </select>
+      <br />
+      <br />
+      <label for="employee">Сотрудник:</label>
+      <select id="employee">
+        <option value="">Выберите сотрудника:</option>
+      </select>
+      <label for="team">Бригада:</label>
+      <select id="team">
+        <option value="">Выберите бригаду:</option>
+        <option value="team1">Бригада 1</option>
+        <option value="team2">Бригада 2</option>
+      </select>
+
+      <label for="shift">Смена:</label>
+      <select id="shift">
+        <option value="">Выберите смену:</option>
+        <option value="shift1">Смена 1</option>
+        <option value="shift2">Смена 2</option>
+      </select>
+
+      <input type="submit" value="Submit" />
+    </form>
+  </body>
+</html>
